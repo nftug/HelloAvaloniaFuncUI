@@ -10,6 +10,8 @@ module MainView =
         let actionButtons =
             StackPanel.create
                 [ StackPanel.spacing 10.0
+                  StackPanel.horizontalAlignment HorizontalAlignment.Center
+                  StackPanel.verticalAlignment VerticalAlignment.Center
                   StackPanel.children
                       [ StackPanel.create
                             [ StackPanel.spacing 10.0
@@ -30,8 +32,12 @@ module MainView =
                               Button.horizontalAlignment HorizontalAlignment.Center ] ] ]
 
         StackPanel.create
-            [ StackPanel.children
-                  [ TextBlock.create
+            [ StackPanel.spacing 10.0
+              StackPanel.horizontalAlignment HorizontalAlignment.Center
+              StackPanel.verticalAlignment VerticalAlignment.Center
+              StackPanel.children
+                  [ Clock.ClockView.view model.Clock dispatch
+                    TextBlock.create
                         [ TextBlock.text $"Count: {model.Count}"
                           TextBlock.fontSize 24.0
                           TextBlock.margin (Thickness(0.0, 0.0, 0.0, 20.0))

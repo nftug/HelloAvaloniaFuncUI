@@ -19,12 +19,19 @@ module MainUpdate =
 
     let update msg model =
         match msg with
+        | ClockMsg clockMsg ->
+            let clockModel, clockCmd = Clock.ClockUpdate.update clockMsg model.Clock
+            { model with Clock = clockModel }, Cmd.map ClockMsg clockCmd
+
         | Increment -> sendDelayedResponse model 100 (model.Count + 1)
         | Decrement -> sendDelayedResponse model 100 (model.Count - 1)
         | Reset -> sendDelayedResponse model 500 0
+
         | Completed count ->
-            printfn $"Completed called with {count}"
-            { Count = count; IsSetting = false }, Cmd.none
+            { model with
+                Count = count
+                IsSetting = false },
+            Cmd.none
         | Error ex ->
             printfn $"Error: {ex.Message}"
             { model with IsSetting = false }, Cmd.none

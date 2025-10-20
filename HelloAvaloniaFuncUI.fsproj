@@ -25,6 +25,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Main/Clock/ClockModel.fs" />
+    <Compile Include="Main/Clock/ClockView.fs" />
+    <Compile Include="Main/Clock/ClockUpdate.fs" />
+
     <Compile Include="Main/MainModel.fs" />
     <Compile Include="Main/MainView.fs" />
     <Compile Include="Main/MainUpdate.fs" />
@@ -38,6 +42,7 @@
     <PackageReference Include="Avalonia.FuncUI" Version="1.5.1" />
     <PackageReference Include="Avalonia.FuncUI.Elmish" Version="1.5.1" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.1.0" />
+    <PackageReference Include="FSharp.Control.R3" Version="0.3.0" />
     <PackageReference Include="FsToolkit.ErrorHandling" Version="5.1.0" />
   </ItemGroup>
 

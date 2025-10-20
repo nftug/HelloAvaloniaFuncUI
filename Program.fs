@@ -18,7 +18,4 @@ module Program =
 
     [<EntryPoint>]
     let main argv =
-        AppBuilder
-            .Configure<App>()
-            .UsePlatformDetect()
-            .StartWithClassicDesktopLifetime(argv)
+        AppBuilder.Configure<App>().UsePlatformDetect().StartWithClassicDesktopLifetime argv
