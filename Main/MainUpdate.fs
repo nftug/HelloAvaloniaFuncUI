@@ -14,7 +14,8 @@ module MainUpdate =
         }
 
     let private sendDelayedResponse model delay number =
-        { model with IsSetting = true }, Cmd.OfTask.either fetchDelayedCount (model, delay, number) Completed Error
+        { model with IsSetting = true },
+        Cmd.OfTask.either fetchDelayedCount (model, delay, number) Completed Error
 
     let update msg model =
         match msg with
