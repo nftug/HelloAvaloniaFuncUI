@@ -9,14 +9,25 @@ module MainView =
     let view (model: Model) (dispatch: Msg -> unit) =
         let actionButtons =
             StackPanel.create
-                [ StackPanel.orientation Orientation.Horizontal
-                  StackPanel.spacing 10.0
+                [ StackPanel.spacing 10.0
                   StackPanel.children
-                      [ Button.create [ Button.content "Increment"; Button.onClick (fun _ -> dispatch Increment) ]
+                      [ StackPanel.create
+                            [ StackPanel.spacing 10.0
+                              StackPanel.orientation Orientation.Horizontal
+                              StackPanel.children
+                                  [ Button.create
+                                        [ Button.content "Increment"
+                                          Button.onClick (fun _ -> dispatch Increment)
+                                          Button.isEnabled (not model.IsSetting) ]
+                                    Button.create
+                                        [ Button.content "Decrement"
+                                          Button.onClick (fun _ -> dispatch Decrement)
+                                          Button.isEnabled (model.Count > 0 && not model.IsSetting) ] ] ]
                         Button.create
-                            [ Button.content "Decrement"
-                              Button.onClick (fun _ -> dispatch Decrement)
-                              Button.isEnabled (model.Count > 0) ] ] ]
+                            [ Button.content "Reset"
+                              Button.onClick (fun _ -> dispatch Reset)
+                              Button.isEnabled (not model.IsSetting)
+                              Button.horizontalAlignment HorizontalAlignment.Center ] ] ]
 
         StackPanel.create
             [ StackPanel.children

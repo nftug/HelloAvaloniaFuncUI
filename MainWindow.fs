@@ -14,6 +14,6 @@ type MainWindow() as this =
         this.Height <- 300.0
         this.WindowStartupLocation <- Avalonia.Controls.WindowStartupLocation.CenterScreen
 
-        Program.mkSimple MainModel.init MainUpdate.update MainView.view
+        Program.mkProgram MainModel.init MainUpdate.update MainView.view
         |> Program.withHost this
-        |> Program.run
+        |> Program.runWithAvaloniaSyncDispatch ()
