@@ -25,6 +25,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Common/AsyncModels.fs" />
+
     <Compile Include="Main/Clock/ClockModel.fs" />
     <Compile Include="Main/Clock/ClockView.fs" />
     <Compile Include="Main/Clock/ClockUpdate.fs" />

@@ -15,7 +15,7 @@ module ClockModel =
         |> ObservableExtensions.Publish
         |> ObservableExtensions.RefCount
 
-    let init () =
+    let init () : Model * Cmd<Msg> =
         { Time = DateTime.Now },
         Cmd.ofEffect (fun dispatch ->
             ObservableSubscribeExtensions.Subscribe(interval, (fun t -> dispatch (SetTime t)))

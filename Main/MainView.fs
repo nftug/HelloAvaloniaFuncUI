@@ -20,15 +20,15 @@ module MainView =
                                   [ Button.create
                                         [ Button.content "Increment"
                                           Button.onClick (fun _ -> dispatch Increment)
-                                          Button.isEnabled (not model.IsSetting) ]
+                                          Button.isEnabled (MainModel.canIncrement model) ]
                                     Button.create
                                         [ Button.content "Decrement"
                                           Button.onClick (fun _ -> dispatch Decrement)
-                                          Button.isEnabled (model.Count > 0 && not model.IsSetting) ] ] ]
+                                          Button.isEnabled (MainModel.canDecrement model) ] ] ]
                         Button.create
                             [ Button.content "Reset"
                               Button.onClick (fun _ -> dispatch Reset)
-                              Button.isEnabled (not model.IsSetting)
+                              Button.isEnabled (MainModel.canReset model)
                               Button.horizontalAlignment HorizontalAlignment.Center ] ] ]
 
         StackPanel.create
