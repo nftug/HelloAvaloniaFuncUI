@@ -4,6 +4,8 @@ open System
 open Avalonia.FuncUI
 open R3
 
+type ClockHooks = { now: IReadable<DateTime> }
+
 module ClockHooks =
     // Model logic
     let private interval =
@@ -11,8 +13,6 @@ module ClockHooks =
         |> fun src -> ObservableExtensions.Select(src, (fun _ -> DateTime.Now))
         |> ObservableExtensions.Publish
         |> ObservableExtensions.RefCount
-
-    type ClockHooks = { now: IReadable<DateTime> }
 
     let useClockHooks (ctx: IComponentContext) : ClockHooks =
         let now = ctx.useState DateTime.Now
@@ -22,4 +22,4 @@ module ClockHooks =
             , [ EffectTrigger.AfterInit ]
         )
 
-        { now = ctx.usePassedRead now }
+        { now = now }

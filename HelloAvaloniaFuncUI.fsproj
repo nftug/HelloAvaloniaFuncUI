@@ -28,7 +28,10 @@
     <Compile Include="Main/Clock/ClockHooks.fs" />
     <Compile Include="Main/Clock/ClockView.fs" />
 
-    <Compile Include="Main/MainHooks.fs" />
+    <Compile Include="Main/Counter/CounterHooks.fs" />
+    <Compile Include="Main/Counter/CounterActionButtonView.fs" />
+    <Compile Include="Main/Counter/CounterView.fs" />
+
     <Compile Include="Main/MainView.fs" />
     <Compile Include="MainWindow.fs" />
 
