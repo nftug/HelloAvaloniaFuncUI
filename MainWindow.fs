@@ -2,8 +2,6 @@ namespace HelloAvaloniaFuncUI
 
 open System
 open Avalonia.FuncUI.Hosts
-open Avalonia.FuncUI.Elmish
-open Elmish
 open HelloAvaloniaFuncUI.Main
 
 type MainWindow() as this =
@@ -14,6 +12,7 @@ type MainWindow() as this =
         this.Width <- 800.0
         this.Height <- 600.0
         this.WindowStartupLocation <- Avalonia.Controls.WindowStartupLocation.CenterScreen
+        this.Content <- MainView.view
 
         // Workaround to bring window to front on startup on macOS
         if OperatingSystem.IsMacOS() then
@@ -22,7 +21,3 @@ type MainWindow() as this =
                     this.Topmost <- true
                     this.Activate()
                     this.Topmost <- false))
-
-        Program.mkProgram MainModel.init MainUpdate.update MainView.view
-        |> Program.withHost this
-        |> Program.runWithAvaloniaSyncDispatch ()
