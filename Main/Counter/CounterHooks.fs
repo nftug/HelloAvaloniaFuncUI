@@ -26,6 +26,10 @@ module CounterHooks =
         let count = ctx.useState 0
         let isSettingWithDelay = ctx.useState false
 
+        let canIncrement = ctx.useState true
+        let canDecrement = ctx.useState true
+        let canReset = ctx.useState true
+
         let startSettingWithDelay delay newCount =
             task {
                 isSettingWithDelay.Set true
@@ -33,14 +37,6 @@ module CounterHooks =
                 count.Set result
                 isSettingWithDelay.Set false
             }
-
-        let canIncrement = isSettingWithDelay.Map(fun isSetting -> not isSetting)
-
-        let canDecrement =
-            isSettingWithDelay.Map(fun isSetting -> count.Current > 0 && not isSetting)
-
-        let canReset =
-            isSettingWithDelay.Map(fun isSetting -> count.Current <> 0 && not isSetting)
 
         let increment () =
             if canIncrement.Current then
@@ -55,6 +51,16 @@ module CounterHooks =
         let reset () =
             if canReset.Current then
                 startSettingWithDelay (TimeSpan.FromMilliseconds 500.0) 0 |> ignore
+
+        ctx.useEffect (
+            (fun () ->
+                canIncrement.Set(not isSettingWithDelay.Current)
+                canDecrement.Set(not isSettingWithDelay.Current && count.Current > 0)
+                canReset.Set(not isSettingWithDelay.Current && count.Current <> 0)),
+            [ EffectTrigger.AfterInit
+              EffectTrigger.AfterChange count
+              EffectTrigger.AfterChange isSettingWithDelay ]
+        )
 
         { count = count
           isSettingWithDelay = isSettingWithDelay
