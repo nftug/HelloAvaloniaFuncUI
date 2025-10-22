@@ -25,6 +25,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Common/Utils/ComponentUtils.fs" />
+
     <Compile Include="Main/Clock/ClockHooks.fs" />
     <Compile Include="Main/Clock/ClockView.fs" />
 

@@ -4,7 +4,7 @@ open System
 open Avalonia.FuncUI
 open R3
 
-type ClockHooks = { now: IReadable<DateTime> }
+type ClockHooks = { Now: IReadable<DateTime> }
 
 module ClockHooks =
     // Model logic
@@ -22,4 +22,4 @@ module ClockHooks =
             , [ EffectTrigger.AfterInit ]
         )
 
-        { now = now }
+        { Now = now }

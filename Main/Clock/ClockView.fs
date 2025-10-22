@@ -18,7 +18,7 @@ module ClockView =
                       StackPanel.verticalAlignment VerticalAlignment.Stretch
                       StackPanel.children
                           [ TextBlock.create
-                                [ TextBlock.text (hooks.now.Current.ToString "HH:mm:ss")
+                                [ TextBlock.text (hooks.Now.Current.ToString "HH:mm:ss")
                                   TextBlock.fontSize 48.0
                                   TextBlock.horizontalAlignment HorizontalAlignment.Center ] ]
                       StackPanel.horizontalAlignment HorizontalAlignment.Center

@@ -10,9 +10,9 @@ module CounterActionButtonView =
         Component.create (
             "CounterActionButtonView",
             fun ctx ->
-                let canIncrement = ctx.usePassedRead hooks.canIncrement
-                let canDecrement = ctx.usePassedRead hooks.canDecrement
-                let canReset = ctx.usePassedRead hooks.canReset
+                let canIncrement = ctx.usePassedRead hooks.CanIncrement
+                let canDecrement = ctx.usePassedRead hooks.CanDecrement
+                let canReset = ctx.usePassedRead hooks.CanReset
 
                 StackPanel.create
                     [ StackPanel.spacing 10.0
@@ -25,15 +25,15 @@ module CounterActionButtonView =
                                   StackPanel.children
                                       [ Button.create
                                             [ Button.content "Increment"
-                                              Button.onClick (fun _ -> hooks.increment ())
+                                              Button.onClick (fun _ -> hooks.Increment())
                                               Button.isEnabled canIncrement.Current ]
                                         Button.create
                                             [ Button.content "Decrement"
-                                              Button.onClick (fun _ -> hooks.decrement ())
+                                              Button.onClick (fun _ -> hooks.Decrement())
                                               Button.isEnabled canDecrement.Current ] ] ]
                             Button.create
                                 [ Button.content "Reset"
-                                  Button.onClick (fun _ -> hooks.reset ())
+                                  Button.onClick (fun _ -> hooks.Reset())
                                   Button.isEnabled canReset.Current
                                   Button.horizontalAlignment HorizontalAlignment.Center ] ] ]
         )
