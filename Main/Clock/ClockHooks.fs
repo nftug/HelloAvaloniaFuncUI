@@ -4,6 +4,8 @@ open System
 open Avalonia.FuncUI
 open R3
 
+type ClockModel = { Now: DateTime }
+
 type ClockHooks = { Now: IReadable<DateTime> }
 
 [<AutoOpen>]
@@ -16,10 +18,12 @@ module ClockHooks =
         |> ObservableExtensions.RefCount
 
     let useClockHooks (ctx: IComponentContext) : ClockHooks =
-        let now = ctx.useState DateTime.Now
+        let model =
+            ctx.useState { ClockModel.Now = DateTime.Now }
 
+        let now = model.Map _.Now
         ctx.useEffect (
-            fun () -> ObservableSubscribeExtensions.Subscribe(interval, (fun t -> now.Set t))
+            fun () -> ObservableSubscribeExtensions.Subscribe(interval, (fun t -> model.Set { Now = t }))
             , [ EffectTrigger.AfterInit ]
         )
 

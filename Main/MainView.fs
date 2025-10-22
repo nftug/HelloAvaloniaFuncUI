@@ -9,9 +9,8 @@ module MainView =
     let view =
         Component(fun _ ->
             StackPanel.create
-                [ StackPanel.spacing 10.0
+                [ StackPanel.spacing 20.0
+                  StackPanel.margin 20.0
                   StackPanel.horizontalAlignment HorizontalAlignment.Center
                   StackPanel.verticalAlignment VerticalAlignment.Center
-                  StackPanel.children [ Clock.ClockView.create (); Counter.CounterView.create () ]
-                  StackPanel.horizontalAlignment HorizontalAlignment.Center
-                  StackPanel.verticalAlignment VerticalAlignment.Center ])
+                  StackPanel.children [ Clock.ClockView.create (); Counter.CounterView.create () ] ])

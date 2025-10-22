@@ -32,6 +32,7 @@
 
     <Compile Include="Main/Counter/CounterHooks.fs" />
     <Compile Include="Main/Counter/CounterActionButtonView.fs" />
+    <Compile Include="Main/Counter/CounterInputView.fs" />
     <Compile Include="Main/Counter/CounterView.fs" />
 
     <Compile Include="Main/MainView.fs" />

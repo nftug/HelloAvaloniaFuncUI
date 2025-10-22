@@ -18,6 +18,7 @@ type CounterHooks =
       CanIncrement: IReadable<bool>
       CanDecrement: IReadable<bool>
       CanReset: IReadable<bool>
+      CanSetInput: IReadable<bool>
       Increment: unit -> unit
       Decrement: unit -> unit
       Reset: unit -> unit
@@ -48,8 +49,9 @@ module CounterHooks =
         let canIncrement = model.Map(fun m -> not m.IsSetting)
         let canDecrement = model.Map(fun m -> not m.IsSetting && m.CountResult > 0)
         let canReset = model.Map(fun m -> not m.IsSetting && m.CountResult <> 0)
+        let canSetInput = model.Map(fun m -> not m.IsSetting && m.CountInput <> m.CountResult)
 
-        let startSettingWithDelay delay newCount =
+        let setCountWithDelay delay newCount =
             task {
                 model.Set
                     { model.Current with IsSetting = true }
@@ -61,26 +63,23 @@ module CounterHooks =
                         CountResult = result
                         CountInput = result
                         IsSetting = false }
-            }
+            } |> ignore
 
         let increment () =
             if canIncrement.Current then
-                startSettingWithDelay (TimeSpan.FromMilliseconds 100.0) (countResult.Current + 1)
-                |> ignore
+                setCountWithDelay (TimeSpan.FromMilliseconds 100.0) (countResult.Current + 1)
 
         let decrement () =
             if canDecrement.Current then
-                startSettingWithDelay (TimeSpan.FromMilliseconds 100.0) (countResult.Current - 1)
-                |> ignore
+                setCountWithDelay (TimeSpan.FromMilliseconds 100.0) (countResult.Current - 1)
 
         let reset () =
             if canReset.Current then
-                startSettingWithDelay (TimeSpan.FromMilliseconds 500.0) 0 |> ignore
+                setCountWithDelay (TimeSpan.FromMilliseconds 500.0) 0
 
         let setFromInput () =
-            if not isSetting.Current && countInput.Current <> countResult.Current then
-                startSettingWithDelay (TimeSpan.FromMilliseconds 300.0) countInput.Current
-                |> ignore
+            if canSetInput.Current then
+                setCountWithDelay (TimeSpan.FromMilliseconds 300.0) countInput.Current
 
         { Model = model
           CountResult = countResult
@@ -92,4 +91,5 @@ module CounterHooks =
           CanIncrement = canIncrement
           CanDecrement = canDecrement
           CanReset = canReset
+          CanSetInput = canSetInput
           SetFromInput = setFromInput }

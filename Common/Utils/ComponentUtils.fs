@@ -4,7 +4,7 @@ open System.Runtime.CompilerServices
 open Avalonia.FuncUI
 
 [<Extension>]
-type __IReadableExtensions =
+type __ComponentUtilsExtension =
     [<Extension>]
     static member useBinding
         (

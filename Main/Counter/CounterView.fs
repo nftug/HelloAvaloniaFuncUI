@@ -7,6 +7,8 @@ open Avalonia.Controls
 open Avalonia.Layout
 
 module CounterView =
+    open System.Diagnostics.Metrics
+
     let create () =
         Component.create (
             "CounterView",
@@ -15,16 +17,16 @@ module CounterView =
                 let countResult = ctx.usePassedRead hooks.CountResult
 
                 StackPanel.create
-                    [ StackPanel.margin 10.0
-                      StackPanel.horizontalAlignment HorizontalAlignment.Stretch
-                      StackPanel.verticalAlignment VerticalAlignment.Stretch
+                    [ StackPanel.margin 20.0
+                      StackPanel.spacing 10.0
+                      StackPanel.horizontalAlignment HorizontalAlignment.Center
+                      StackPanel.verticalAlignment VerticalAlignment.Center
                       StackPanel.children
                           [ TextBlock.create
                                 [ TextBlock.text $"Count: {countResult.Current}"
                                   TextBlock.fontSize 24.0
                                   TextBlock.margin (Thickness(0.0, 0.0, 0.0, 20.0))
                                   TextBlock.horizontalAlignment HorizontalAlignment.Center ]
-                            CounterActionButtonView.create hooks ]
-                      StackPanel.horizontalAlignment HorizontalAlignment.Center
-                      StackPanel.verticalAlignment VerticalAlignment.Center ]
+                            CounterInputView.create hooks
+                            CounterActionButtonView.create hooks ] ]
         )

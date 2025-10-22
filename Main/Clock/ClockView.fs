@@ -11,16 +11,11 @@ module ClockView =
             "ClockView",
             fun ctx ->
                 let hooks = useClockHooks ctx
+                let now = ctx.usePassedRead hooks.Now
 
-                StackPanel.create
-                    [ StackPanel.margin 15.0
-                      StackPanel.horizontalAlignment HorizontalAlignment.Stretch
-                      StackPanel.verticalAlignment VerticalAlignment.Stretch
-                      StackPanel.children
-                          [ TextBlock.create
-                                [ TextBlock.text (hooks.Now.Current.ToString "HH:mm:ss")
-                                  TextBlock.fontSize 48.0
-                                  TextBlock.horizontalAlignment HorizontalAlignment.Center ] ]
-                      StackPanel.horizontalAlignment HorizontalAlignment.Center
-                      StackPanel.verticalAlignment VerticalAlignment.Center ]
+                TextBlock.create
+                    [ TextBlock.text (now.Current.ToString "HH:mm:ss")
+                      TextBlock.fontSize 48.0
+                      TextBlock.horizontalAlignment HorizontalAlignment.Center
+                      TextBlock.verticalAlignment VerticalAlignment.Center ]
         )
