@@ -6,7 +6,7 @@ open Avalonia.Controls
 open Avalonia.Layout
 
 module CounterActionButtonView =
-    let view (hooks: CounterHooks) =
+    let create (hooks: CounterHooks) =
         Component.create (
             "CounterActionButtonView",
             fun ctx ->

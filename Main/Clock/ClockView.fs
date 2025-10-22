@@ -6,11 +6,11 @@ open Avalonia.Controls
 open Avalonia.Layout
 
 module ClockView =
-    let view () =
+    let create () =
         Component.create (
             "ClockView",
             fun ctx ->
-                let hooks = ClockHooks.useClockHooks ctx
+                let hooks = useClockHooks ctx
 
                 StackPanel.create
                     [ StackPanel.margin 15.0

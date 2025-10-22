@@ -12,6 +12,6 @@ module MainView =
                 [ StackPanel.spacing 10.0
                   StackPanel.horizontalAlignment HorizontalAlignment.Center
                   StackPanel.verticalAlignment VerticalAlignment.Center
-                  StackPanel.children [ Clock.ClockView.view (); Counter.CounterView.view () ]
+                  StackPanel.children [ Clock.ClockView.create (); Counter.CounterView.create () ]
                   StackPanel.horizontalAlignment HorizontalAlignment.Center
                   StackPanel.verticalAlignment VerticalAlignment.Center ])

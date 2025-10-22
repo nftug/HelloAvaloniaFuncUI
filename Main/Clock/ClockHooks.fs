@@ -6,6 +6,7 @@ open R3
 
 type ClockHooks = { Now: IReadable<DateTime> }
 
+[<AutoOpen>]
 module ClockHooks =
     // Model logic
     let private interval =

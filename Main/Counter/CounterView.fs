@@ -7,11 +7,12 @@ open Avalonia.Controls
 open Avalonia.Layout
 
 module CounterView =
-    let view () =
+    let create () =
         Component.create (
             "CounterView",
             fun ctx ->
-                let hooks = CounterHooks.useCounterHooks ctx
+                let hooks = useCounterHooks ctx
+                let countResult = ctx.usePassedRead hooks.CountResult
 
                 StackPanel.create
                     [ StackPanel.margin 10.0
@@ -19,11 +20,11 @@ module CounterView =
                       StackPanel.verticalAlignment VerticalAlignment.Stretch
                       StackPanel.children
                           [ TextBlock.create
-                                [ TextBlock.text $"Count: {hooks.Count.Current}"
+                                [ TextBlock.text $"Count: {countResult.Current}"
                                   TextBlock.fontSize 24.0
                                   TextBlock.margin (Thickness(0.0, 0.0, 0.0, 20.0))
                                   TextBlock.horizontalAlignment HorizontalAlignment.Center ]
-                            CounterActionButtonView.view hooks ]
+                            CounterActionButtonView.create hooks ]
                       StackPanel.horizontalAlignment HorizontalAlignment.Center
                       StackPanel.verticalAlignment VerticalAlignment.Center ]
         )
