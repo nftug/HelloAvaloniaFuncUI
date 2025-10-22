@@ -7,14 +7,13 @@ open Avalonia.Controls
 open Avalonia.Layout
 
 module CounterView =
-    open System.Diagnostics.Metrics
-
     let create () =
         Component.create (
             "CounterView",
             fun ctx ->
                 let hooks = useCounterHooks ctx
-                let countResult = ctx.usePassedRead hooks.CountResult
+                let model = ctx.usePassedRead hooks.Model
+                let countResult = model.Map(fun m -> m.CountResult) |> ctx.usePassedRead
 
                 StackPanel.create
                     [ StackPanel.margin 20.0
