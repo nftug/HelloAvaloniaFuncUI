@@ -7,37 +7,27 @@ open Avalonia.FuncUI.DSL
 open Avalonia.Controls
 open Avalonia.Layout
 
-type private MergedModel =
-    { Model: CounterModel; InputValue: int }
-
 module CounterInputView =
-    let private mergeModel m prev =
-        match prev with
-        | Some p when m.IsSetting -> { Model = m; InputValue = p.InputValue }
-        | _ ->
-            { Model = m
-              InputValue = m.CountResult }
-
     let inputDelay = TimeSpan.FromMilliseconds 300.0
 
     let create (hooks: CounterHooks) =
         Component.create (
             "CounterInputView",
             fun ctx ->
-                let model = ctx.useMerged (hooks.Model, mergeModel)
+                let count = hooks.Count |> ctx.usePassedRead
+                let isSetting = hooks.IsSetting |> ctx.usePassedRead
+                let inputValue = ctx.useState count.Current
 
-                let inputValue =
-                    ctx.useBinding (
-                        model,
-                        (fun m -> m.InputValue),
-                        fun v prev -> { prev with InputValue = v }
-                    )
+                ctx.useEffect (
+                    fun () -> inputValue.Set count.Current
+                    , [ EffectTrigger.AfterChange count ]
+                )
 
                 let canSetInput =
-                    model.Map(fun c -> c.Model.CountResult <> c.InputValue && not c.Model.IsSetting)
-                    |> ctx.usePassedRead
-
-                let isSetting = model.Map(fun c -> c.Model.IsSetting) |> ctx.usePassedRead
+                    ctx.useDerived3 (
+                        (isSetting, count, inputValue),
+                        fun (s, c, i) -> not s && i <> c
+                    )
 
                 let setCountFromInput () =
                     if canSetInput.Current then

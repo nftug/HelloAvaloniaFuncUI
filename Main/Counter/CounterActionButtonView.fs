@@ -15,15 +15,15 @@ module CounterActionButtonView =
         Component.create (
             "CounterActionButtonView",
             fun ctx ->
-                let model = ctx.usePassedRead hooks.Model
-                let count = model.Map(fun m -> m.CountResult) |> ctx.usePassedRead
-                let canIncrement = model.Map(fun m -> not m.IsSetting) |> ctx.usePassedRead
+                let count = hooks.Count |> ctx.usePassedRead
+                let isSetting = hooks.IsSetting |> ctx.usePassedRead
+
+                let canIncrement = isSetting.Map(fun s -> not s) |> ctx.usePassedRead
 
                 let canDecrement =
-                    model.Map(fun m -> not m.IsSetting && m.CountResult > 0) |> ctx.usePassedRead
+                    ctx.useDerived2 ((isSetting, count), (fun (s, c) -> not s && c > 0))
 
-                let canReset =
-                    model.Map(fun m -> not m.IsSetting && m.CountResult <> 0) |> ctx.usePassedRead
+                let canReset = ctx.useDerived2 ((isSetting, count), (fun (s, c) -> not s && c <> 0))
 
                 let increment () =
                     if canIncrement.Current then

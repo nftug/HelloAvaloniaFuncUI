@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Compile Include="Common/Utils/ComponentContextExtensions.fs" />
+    <Compile Include="Common/Utils/UseDerivedExtensions.fs" />
 
     <Compile Include="Main/Clock/ClockHooks.fs" />
     <Compile Include="Main/Clock/ClockView.fs" />

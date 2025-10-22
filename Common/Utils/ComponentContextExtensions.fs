@@ -29,24 +29,3 @@ type __ComponentContextExtensions =
         )
 
         binding
-
-    [<Extension>]
-    static member useMerged
-        (
-            ctx: IComponentContext,
-            model: IReadable<'T>,
-            mergeFunc: 'T -> 'U option -> 'U
-        ) : IWritable<'U> =
-        let model = ctx.usePassedRead model
-        let merged = ctx.useState (mergeFunc model.Current None)
-
-        ctx.useEffect (
-            fun () ->
-                let next = mergeFunc model.Current (Some merged.Current)
-
-                if next <> merged.Current then
-                    merged.Set next
-            , [ EffectTrigger.AfterChange model ]
-        )
-
-        merged
