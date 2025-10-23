@@ -8,17 +8,22 @@ open Avalonia.Controls
 open Avalonia.Layout
 
 module CounterActionButtonView =
-    let incAndDecDelay = TimeSpan.FromMilliseconds 100.0
-    let resetDelay = TimeSpan.FromMilliseconds 500.0
+    let private incAndDecDelay = TimeSpan.FromMilliseconds 100.0
+    let private resetDelay = TimeSpan.FromMilliseconds 500.0
 
-    let create (hooks: CounterHooks) =
+    let create
+        (
+            count: IReadable<int>,
+            isSetting: IReadable<bool>,
+            setCountWithDelay: TimeSpan -> int -> unit
+        ) =
         Component.create (
             "CounterActionButtonView",
             fun ctx ->
-                let count = hooks.Count |> ctx.usePassedRead
-                let isSetting = hooks.IsSetting |> ctx.usePassedRead
+                let count = ctx.usePassedRead count
+                let isSetting = ctx.usePassedRead isSetting
 
-                let canIncrement = isSetting.Map(fun s -> not s) |> ctx.usePassedRead
+                let canIncrement = ctx.usePassedRead (isSetting.Map(fun s -> not s))
 
                 let canDecrement =
                     ctx.useDerived2 ((isSetting, count), (fun (s, c) -> not s && c > 0))
@@ -27,15 +32,15 @@ module CounterActionButtonView =
 
                 let increment () =
                     if canIncrement.Current then
-                        hooks.SetCountWithDelay incAndDecDelay (count.Current + 1)
+                        setCountWithDelay incAndDecDelay (count.Current + 1)
 
                 let decrement () =
                     if canDecrement.Current then
-                        hooks.SetCountWithDelay incAndDecDelay (count.Current - 1)
+                        setCountWithDelay incAndDecDelay (count.Current - 1)
 
                 let reset () =
                     if canReset.Current then
-                        hooks.SetCountWithDelay resetDelay 0
+                        setCountWithDelay resetDelay 0
 
                 Grid.create
                     [ Grid.width 300.0

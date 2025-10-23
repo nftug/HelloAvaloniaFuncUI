@@ -1,7 +1,6 @@
 namespace Avalonia.FuncUI
 
 open System.Runtime.CompilerServices
-open Avalonia.FuncUI
 
 [<Extension>]
 type __UseDerivedExtensions =

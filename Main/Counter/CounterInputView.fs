@@ -8,14 +8,19 @@ open Avalonia.Controls
 open Avalonia.Layout
 
 module CounterInputView =
-    let inputDelay = TimeSpan.FromMilliseconds 300.0
+    let private inputDelay = TimeSpan.FromMilliseconds 300.0
 
-    let create (hooks: CounterHooks) =
+    let create
+        (
+            count: IReadable<int>,
+            isSetting: IReadable<bool>,
+            setCountWithDelay: TimeSpan -> int -> unit
+        ) =
         Component.create (
             "CounterInputView",
             fun ctx ->
-                let count = hooks.Count |> ctx.usePassedRead
-                let isSetting = hooks.IsSetting |> ctx.usePassedRead
+                let count = ctx.usePassedRead count
+                let isSetting = ctx.usePassedRead isSetting
                 let inputValue = ctx.useState count.Current
 
                 ctx.useEffect (
@@ -31,7 +36,7 @@ module CounterInputView =
 
                 let setCountFromInput () =
                     if canSetInput.Current then
-                        hooks.SetCountWithDelay inputDelay inputValue.Current
+                        setCountWithDelay inputDelay inputValue.Current
 
                 Grid.create
                     [ Grid.columnDefinitions "1*, Auto"

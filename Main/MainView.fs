@@ -6,7 +6,7 @@ open Avalonia.Controls
 open Avalonia.Layout
 
 module MainView =
-    let view =
+    let create () =
         Component(fun _ ->
             StackPanel.create
                 [ StackPanel.spacing 20.0
