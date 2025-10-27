@@ -10,17 +10,15 @@ type ClockHooks = { Now: IReadable<DateTime> }
 module ClockHooks =
     // Model logic
     let private interval =
-        Observable.Interval(TimeSpan.FromSeconds 1.0)
-        |> fun src -> ObservableExtensions.Select(src, (fun _ -> DateTime.Now))
-        |> ObservableExtensions.Publish
-        |> ObservableExtensions.RefCount
+        Observable
+            .Interval(TimeSpan.FromSeconds 1.0)
+            .Select(fun _ -> DateTime.Now)
+            .Publish()
+            .RefCount()
 
     let useClockHooks (ctx: IComponentContext) : ClockHooks =
         let now = ctx.useState DateTime.Now
 
-        ctx.useEffect (
-            fun () -> ObservableSubscribeExtensions.Subscribe(interval, (fun t -> now.Set t))
-            , [ EffectTrigger.AfterInit ]
-        )
+        ctx.useEffect ((fun () -> interval.Subscribe now.Set), [ EffectTrigger.AfterInit ])
 
         { Now = now }

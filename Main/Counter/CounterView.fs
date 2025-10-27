@@ -27,6 +27,6 @@ module CounterView =
                                   TextBlock.fontSize 24.0
                                   TextBlock.margin (Thickness(0.0, 0.0, 0.0, 20.0))
                                   TextBlock.horizontalAlignment HorizontalAlignment.Center ]
-                            CounterInputView.create (count, isSetting, setCountWithDelay)
-                            CounterActionButtonView.create (count, isSetting, setCountWithDelay) ] ]
+                            CounterInputView.create count isSetting setCountWithDelay
+                            CounterActionButtonView.create count isSetting setCountWithDelay ] ]
         )

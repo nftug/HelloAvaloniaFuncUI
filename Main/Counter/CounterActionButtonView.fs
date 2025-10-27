@@ -12,18 +12,17 @@ module CounterActionButtonView =
     let private resetDelay = TimeSpan.FromMilliseconds 500.0
 
     let create
-        (
-            count: IReadable<int>,
-            isSetting: IReadable<bool>,
-            setCountWithDelay: TimeSpan -> int -> unit
-        ) =
+        (count: IReadable<int>)
+        (isSetting: IReadable<bool>)
+        (setCountWithDelay: TimeSpan -> int -> unit)
+        =
         Component.create (
             "CounterActionButtonView",
             fun ctx ->
                 let count = ctx.usePassedRead count
                 let isSetting = ctx.usePassedRead isSetting
 
-                let canIncrement = ctx.usePassedRead (isSetting.Map(fun s -> not s))
+                let canIncrement = ctx.useDerived1 (isSetting, not)
 
                 let canDecrement =
                     ctx.useDerived2 ((isSetting, count), (fun (s, c) -> not s && c > 0))

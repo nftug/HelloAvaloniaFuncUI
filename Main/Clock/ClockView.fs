@@ -15,7 +15,8 @@ module ClockView =
 
                 TextBlock.create
                     [ TextBlock.text (now.Current.ToString "HH:mm:ss")
-                      TextBlock.fontSize 48.0
+                      TextBlock.fontSize 56.0
+                      TextBlock.margin 10.0
                       TextBlock.horizontalAlignment HorizontalAlignment.Center
                       TextBlock.verticalAlignment VerticalAlignment.Center ]
         )

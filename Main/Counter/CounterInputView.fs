@@ -11,11 +11,10 @@ module CounterInputView =
     let private inputDelay = TimeSpan.FromMilliseconds 300.0
 
     let create
-        (
-            count: IReadable<int>,
-            isSetting: IReadable<bool>,
-            setCountWithDelay: TimeSpan -> int -> unit
-        ) =
+        (count: IReadable<int>)
+        (isSetting: IReadable<bool>)
+        (setCountWithDelay: TimeSpan -> int -> unit)
+        =
         Component.create (
             "CounterInputView",
             fun ctx ->

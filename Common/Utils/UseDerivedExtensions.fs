@@ -5,6 +5,15 @@ open System.Runtime.CompilerServices
 [<Extension>]
 type __UseDerivedExtensions =
     [<Extension>]
+    static member useDerived1
+        (
+            ctx: IComponentContext,
+            source: IReadable<'A>,
+            mapFunc: 'A -> 'B
+        ) : IReadable<'B> =
+        ctx.usePassedRead (source.Map mapFunc)
+
+    [<Extension>]
     static member useDerived2
         (
             ctx: IComponentContext,
