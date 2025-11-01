@@ -13,7 +13,7 @@ module CounterInputView =
     let create
         (count: IReadable<int>)
         (isSetting: IReadable<bool>)
-        (setCountWithDelay: TimeSpan -> int -> unit)
+        (setCountWithDelay: (TimeSpan * int) -> unit)
         =
         Component.create (
             "CounterInputView",
@@ -35,7 +35,7 @@ module CounterInputView =
 
                 let setCountFromInput () =
                     if canSetInput.Current then
-                        setCountWithDelay inputDelay inputValue.Current
+                        setCountWithDelay (inputDelay, inputValue.Current)
 
                 Grid.create
                     [ Grid.columnDefinitions "1*, Auto"

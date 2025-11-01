@@ -14,7 +14,7 @@ module CounterActionButtonView =
     let create
         (count: IReadable<int>)
         (isSetting: IReadable<bool>)
-        (setCountWithDelay: TimeSpan -> int -> unit)
+        (setCountWithDelay: (TimeSpan * int) -> unit)
         =
         Component.create (
             "CounterActionButtonView",
@@ -31,15 +31,15 @@ module CounterActionButtonView =
 
                 let increment () =
                     if canIncrement.Current then
-                        setCountWithDelay incAndDecDelay (count.Current + 1)
+                        setCountWithDelay (incAndDecDelay, count.Current + 1)
 
                 let decrement () =
                     if canDecrement.Current then
-                        setCountWithDelay incAndDecDelay (count.Current - 1)
+                        setCountWithDelay (incAndDecDelay, count.Current - 1)
 
                 let reset () =
                     if canReset.Current then
-                        setCountWithDelay resetDelay 0
+                        setCountWithDelay (resetDelay, 0)
 
                 Grid.create
                     [ Grid.width 300.0
